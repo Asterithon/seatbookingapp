@@ -1,5 +1,4 @@
-import {StyleSheet, Text, TouchableOpacity, View} from "react-native";
-import {globalStyles} from "../styles/global";
+import {StyleSheet, Text, View} from "react-native";
 import { colors } from "../styles/global";
 
 interface PriceBoxProps {
@@ -25,11 +24,11 @@ export default function PriceBox({ selectedSeats, shippingType }: PriceBoxProps)
     const totalPrice = calculatePrice();
 
     return (
-    <View style={styles.container}>
+    <View>
         <View style={styles.row}>
             <Text style={styles.label}>Seat(s) chosen:</Text>
             <Text style={styles.value}>
-                {selectedSeats.length > 0 ? selectedSeats.join(', ') : 'Belum ada'}
+                {selectedSeats.length > 0 ? selectedSeats.join(', ') : 'you haven\'t chosen yet'}
             </Text>
         </View>
 
@@ -49,15 +48,6 @@ export default function PriceBox({ selectedSeats, shippingType }: PriceBoxProps)
 }
 
 const styles = StyleSheet.create({
-    container: {
-        width: '100%',
-        backgroundColor: '#f8f9fa',
-        padding: 16,
-        borderRadius: 12,
-        borderWidth: 1,
-        borderColor: '#e9ecef',
-        marginTop: 20,
-    },
     row: {
         flexDirection: 'row',
         justifyContent: 'space-between',
@@ -65,16 +55,16 @@ const styles = StyleSheet.create({
     },
     label: {
         fontSize: 14,
-        color: '#6c757d',
+        color: colors.text,
     },
     value: {
         fontSize: 14,
         fontWeight: '600',
-        color: '#343a40',
+        color: colors.text,
     },
     totalRow: {
         borderTopWidth: 1,
-        borderTopColor: '#dee2e6',
+        borderTopColor: colors.lightGray,
         paddingTop: 10,
         marginTop: 4,
         marginBottom: 0,
@@ -82,11 +72,11 @@ const styles = StyleSheet.create({
     totalLabel: {
         fontSize: 16,
         fontWeight: 'bold',
-        color: '#212529',
+        color: colors.text,
     },
     totalValue: {
         fontSize: 16,
         fontWeight: 'bold',
-        color: '#007AFF',
+        color: colors.secondary,
     },
 });

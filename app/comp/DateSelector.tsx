@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Platform } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import { colors } from "../styles/global";
 
 interface DateSelectorProps {
   onDateChange: (dateString: string) => void; // Mengirim format "YYYY-MM-DD" ke parent
@@ -36,8 +37,6 @@ export default function DateSelector({ onDateChange }: DateSelectorProps) {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.label}>Pilih Tanggal:</Text>
-      
       {/* Tombol pemicu kalender */}
       <TouchableOpacity
         style={styles.dateBtn}
@@ -45,7 +44,7 @@ export default function DateSelector({ onDateChange }: DateSelectorProps) {
         activeOpacity={0.8}
       >
         <Text style={styles.btnText}>
-          📅 {formatDate(selectedDate)}
+        Date : {formatDate(selectedDate)}
         </Text>
       </TouchableOpacity>
 
@@ -66,7 +65,7 @@ export default function DateSelector({ onDateChange }: DateSelectorProps) {
 const styles = StyleSheet.create({
   container: {
     width: '100%',
-    marginBottom: 15,
+    paddingTop: 20,
   },
   label: {
     fontSize: 14,
@@ -78,10 +77,10 @@ const styles = StyleSheet.create({
     width: '100%',
     paddingVertical: 12,
     paddingHorizontal: 15,
-    backgroundColor: '#f8f9fa',
+    backgroundColor: colors.lightGray,
     borderRadius: 8,
     borderWidth: 1,
-    borderColor: '#ced4da',
+    borderColor: colors.gray,
     justifyContent: 'center',
   },
   btnText: {

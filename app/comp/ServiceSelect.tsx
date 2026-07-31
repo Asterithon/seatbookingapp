@@ -6,7 +6,7 @@ interface ShippingSelectorProps {
     onSelect: (type: string) => void;
 }
 
-export default function ShippingSelector({ selected, onSelect }: ShippingSelectorProps) {
+export default function ServiceSelector({ selected, onSelect }: ShippingSelectorProps) {
     return (
         <View style={styles.container}>        
             <View style={styles.toggleContainer}>

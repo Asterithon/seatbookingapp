@@ -110,12 +110,12 @@ const styles = StyleSheet.create({
     width: 30,
   },
   seat: {
-    backgroundColor: '#f0f0f0',
+    backgroundColor: colors.tertiary,
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 6,
     borderWidth: 1,
-    borderColor: '#ccc',
+    borderColor: colors.secondary,
   },
   regularSize: {
     width: 45,
@@ -127,10 +127,11 @@ const styles = StyleSheet.create({
   },
   selected: {
     backgroundColor: colors.primary,
-    borderColor: '#004080',
+    borderColor: colors.secondary,
   },
   disabledSeat: {
-    backgroundColor: '#e0e0e0',
+    backgroundColor: colors.lightGray,
+    borderColor: colors.black,
     opacity: 0.4,
   },
   bookedSeat: {

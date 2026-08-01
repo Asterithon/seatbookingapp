@@ -86,7 +86,7 @@ export default function BookList() {
     return (
         <View style={{ flex: 1 }}>
             <ScrollView contentContainerStyle={{ paddingBottom: 265, paddingVertical: 20, ...globalStyles.container }} showsVerticalScrollIndicator={false}>
-                <Text style={globalStyles.title}>Booking List History</Text>
+                <Text style={{marginVertical: 20, ...globalStyles.title}}>Booking List History</Text>
 
                 {/* --- BAGIAN FILTER (TANGGAL & LAYANAN) --- */}
                 <View style={globalStyles.blockVertical}>

@@ -78,7 +78,7 @@ export default function Book() {
 
     const handleCheckout = async () => {
         if (selectedSeats.length === 0) {
-        Alert.alert("Warn", "Silakan pilih minimal 1 kursi terlebih dahulu!");
+        Alert.alert("Hold Up!", "you haven't chosen any seat yet. Please select at least one seat to proceed...");
         return;
         }
 
@@ -96,7 +96,7 @@ export default function Book() {
         // Logic : if number of selected = total seats - booked seats : DESTROY 
         if (selectedSeats.length === remainingSeats) {
             Alert.alert(
-            "Fully Booked",
+            "It's Fully Booked!",
             `All seats in ${shippingType} at ${selectedDate} have been booked. The seats for this service and date will reset.`,
             [
                 {
@@ -126,8 +126,8 @@ export default function Book() {
             await AsyncStorage.setItem(storageKey, JSON.stringify(bookings));
 
             Alert.alert(
-            "Sukses",
-            `Booking untuk tanggal ${selectedDate} (${shippingType}) dengan kursi [${selectedSeats.join(", ")}] berhasil disimpan!`,
+            "Success!",
+            `Booking for ${selectedDate} (${shippingType}) with seat(s) [${selectedSeats.join(", ")}] successfully added!`,
             [
                 {
                 text: "OK",
@@ -139,10 +139,10 @@ export default function Book() {
             );
         }
         } catch (error) {
-        console.error("Gagal menyimpan booking:", error);
+        console.error("failed to save:", error);
         Alert.alert(
             "Error",
-            "Terjadi kesalahan saat menyimpan data ke penyimpanan lokal.",
+            "something unexpected happend.",
         );
         }
     };
@@ -150,9 +150,9 @@ export default function Book() {
     return (
         <View>
             <ScrollView contentContainerStyle={{ paddingBottom: 265, paddingVertical: 20, ...globalStyles.container }} showsVerticalScrollIndicator={false}>
-                <Text style={globalStyles.title}>Book your Seat</Text>
-                <View style={{marginTop: 20, ...globalStyles.blockVertical}}>
-                    <Text style={globalStyles.subtitle}>Select the date:</Text>
+                <Text style={{marginVertical: 20, ...globalStyles.title}}>Book your Seat</Text>
+                <View style={globalStyles.blockVertical}>
+                    <Text style={globalStyles.label}>Select the date:</Text>
                     <DateSelector onDateChange={handleDateChange} />
                 </View>
 
@@ -166,7 +166,7 @@ export default function Book() {
 
                 {/* Grid seat */}
                 <View style={globalStyles.blockVertical}>
-                    <Text style={globalStyles.text}>Choose seat (Max 5)</Text>
+                    <Text style={{...globalStyles.label, marginBottom: 15}}>Choose seat (Max 5)</Text>
                 <SeatGrid
                     bookedSeats={bookedSeats} 
                     shippingType={shippingType}

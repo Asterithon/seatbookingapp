@@ -72,7 +72,7 @@ export const globalStyles = StyleSheet.create({
 
     // Text
     title: {
-        fontSize: 20,
+        fontSize: 25,
         fontWeight: "bold",
     },
     subtitle: {
@@ -93,10 +93,9 @@ export const globalStyles = StyleSheet.create({
         color: colors.gray,
     },
     label: {
-        fontSize: 12,
+        fontSize: 14,
         fontWeight: '600',
         color: '#495057',
-        marginBottom: 6,
         alignSelf: 'flex-start',
     },
     

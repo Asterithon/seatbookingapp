@@ -6,7 +6,7 @@ A React Native and Expo mobile application for interactive seat booking, complet
 
 ## 📥 APK Download
 * **Android APK:** 
-   https://drive.google.com/drive/folders/1L20EYWE3DoZ-cSkXh-GDd8ETT6wxLwVs?usp=sharing
+   https://drive.google.com/file/d/1pUer8ZvC70uR3rLxgXsDcUOySUqM3YPv/view?usp=sharing
 ---
 
 ## 🚀 Features

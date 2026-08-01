@@ -4,7 +4,7 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import { colors } from "../styles/global";
 
 interface DateSelectorProps {
-  onDateChange: (dateString: string) => void; // Mengirim format "YYYY-MM-DD" ke parent
+  onDateChange: (dateString: string) => void; // format "YYYY-MM-DD"
 }
 
 export default function DateSelector({ onDateChange }: DateSelectorProps) {
@@ -21,17 +21,15 @@ export default function DateSelector({ onDateChange }: DateSelectorProps) {
   const [selectedDate, setSelectedDate] = useState<Date>(today);
   const [showPicker, setShowPicker] = useState<boolean>(false);
 
-  // Saat pertama kali dirender, kirim tanggal hari ini ke parent
   React.useEffect(() => {
     onDateChange(formatDate(today));
   }, []);
 
-  // Handler saat tanggal dipilih dari kalender
   const handleDateChange = (event: any, date?: Date) => {
-    setShowPicker(Platform.OS === 'ios'); // Di iOS picker tetap tampil, di Android tertutup otomatis
+    setShowPicker(Platform.OS === 'ios'); 
     if (date) {
       setSelectedDate(date);
-      onDateChange(formatDate(date)); // Kirim string "YYYY-MM-DD" ke parent
+      onDateChange(formatDate(date)); 
     }
   };
 
@@ -54,7 +52,7 @@ export default function DateSelector({ onDateChange }: DateSelectorProps) {
           value={selectedDate}
           mode="date"
           display="default"
-          minimumDate={today} // Mencegah pemilihan tanggal yang sudah lewat
+          minimumDate={today}
           onChange={handleDateChange}
         />
       )}
@@ -65,19 +63,19 @@ export default function DateSelector({ onDateChange }: DateSelectorProps) {
 const styles = StyleSheet.create({
   container: {
     width: '100%',
-    paddingTop: 20,
+    paddingTop: 10,
   },
   label: {
     fontSize: 14,
     fontWeight: '600',
     marginBottom: 8,
-    color: '#333',
+    color: colors.dark,
   },
   dateBtn: {
     width: '100%',
     paddingVertical: 12,
     paddingHorizontal: 15,
-    backgroundColor: colors.lightGray,
+    backgroundColor: colors.white,
     borderRadius: 8,
     borderWidth: 1,
     borderColor: colors.gray,
@@ -86,6 +84,6 @@ const styles = StyleSheet.create({
   btnText: {
     fontSize: 14,
     fontWeight: '600',
-    color: '#333',
+    color: colors.text,
   },
 });

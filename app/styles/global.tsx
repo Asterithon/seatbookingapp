@@ -3,15 +3,16 @@ import { StyleSheet } from "react-native";
 export const colors = {
     primary: "#073477",
     secondary: "#2196F3",
-    tertiary: "#E3F2FD",
+    tertiary: "#d4eaf9",
     background: "#f9f9f9",
     ground: "#dee5ef",
     text: "#333",
-    textSecondary: "#414040",
+    textSecondary: "#727272",
     white: "#fff",
     gray: "#cdcdcd",
     lightGray: "#f0f0f0",
-    black: "#224248",
+    dark: "#1f2425",
+    black: "#101010",
 };
 
 export const globalStyles = StyleSheet.create({
@@ -76,9 +77,7 @@ export const globalStyles = StyleSheet.create({
     },
     subtitle: {
         fontSize: 16,
-        color: colors.text,
-        textAlign: "center",
-        marginBottom: 20,
+        fontWeight: "bold",
     },
     primaryText: {
         fontSize: 16,
@@ -93,9 +92,17 @@ export const globalStyles = StyleSheet.create({
         fontSize: 16,
         color: colors.gray,
     },
+    label: {
+        fontSize: 12,
+        fontWeight: '600',
+        color: '#495057',
+        marginBottom: 6,
+        alignSelf: 'flex-start',
+    },
     
     // button
     ButtonLarge: {
+        flex: 1,
         paddingVertical: 14,
         borderRadius: 10,
         alignItems: "center",
@@ -104,7 +111,7 @@ export const globalStyles = StyleSheet.create({
     Button: {
         paddingVertical: 5,
         paddingHorizontal: 20,
-        borderRadius: 50,
+        borderRadius: 15,
     },
     primaryButton: {
         backgroundColor: colors.primary,
@@ -112,29 +119,8 @@ export const globalStyles = StyleSheet.create({
     secondaryButton: {
         backgroundColor: colors.secondary,
     },
-
-    // card
-      card: {
-    backgroundColor: '#fff',
-    borderRadius: 10,
-    padding: 15,
-    marginBottom: 15,
-    borderWidth: 1,
-    borderColor: '#e0e0e0',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowRadius: 2,
-    elevation: 2,
-    width: '100%',
-  },
-  cardHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 10,
-    borderBottomWidth: 1,
-    borderBottomColor: '#f0f0f0',
-    paddingBottom: 8,
-  },
+    darkButton: {
+        backgroundColor: colors.dark,
+    },
 
 })

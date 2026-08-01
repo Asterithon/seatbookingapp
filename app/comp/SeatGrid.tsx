@@ -4,14 +4,14 @@ import { colors } from '../styles/global';
 
 interface SeatGridProps {
   shippingType: string;
-  selectedSeats: string[]; // Menerima data kursi terpilih langsung dari parent
+  selectedSeats: string[];
   bookedSeats: string[];
   onSeatChange: (seats: string[]) => void;
 }
 
 export default function SeatGrid({ 
   shippingType, 
-  selectedSeats, // Terima sebagai prop
+  selectedSeats, 
   bookedSeats,
   onSeatChange 
 }: SeatGridProps) {
@@ -22,18 +22,18 @@ export default function SeatGrid({
     let updatedSeats: string[];
 
     if (selectedSeats.includes(seatName)) {
-      // Unselect (hapus dari array)
+      // Unselect 
       updatedSeats = selectedSeats.filter((seat) => seat !== seatName);
     } else {
-      // Cek batas maksimal 5 kursi
+      // Limit
       if (selectedSeats.length >= MAX_LIMIT) {
         return; 
       }
-      // Tambahkan kursi baru
+      // Select
       updatedSeats = [...selectedSeats, seatName];
     }
 
-    onSeatChange(updatedSeats); // Kirim array terbaru ke parent
+    onSeatChange(updatedSeats); 
   };
 
   const rows = shippingType === 'regular' ? ['A', 'B', 'C', 'D', 'E'] : ['A', 'B', 'C'];
@@ -43,7 +43,6 @@ export default function SeatGrid({
       {seatNumbers.map((num) => {
         const seatName = `${row}${num}`;
         
-        // Pengecekan status murni berdasarkan prop dari parent
         const isSelected = selectedSeats.includes(seatName);
         const isBooked = bookedSeats.includes(seatName);
         const isMaxReached = selectedSeats.length >= MAX_LIMIT;
@@ -57,8 +56,9 @@ export default function SeatGrid({
               styles.seat,
               shippingType === 'express' ? styles.expressSize : styles.regularSize,
               isSelected && styles.selected,
-              // Jika kursi sudah dibooking ATAU melebihi limit, gunakan style disabledSeat yang sama
+
               (isBooked || (isMaxReached && !isSelected)) && styles.disabledSeat,
+
             ]}
             onPress={() => handleSeatPress(seatName)}
             activeOpacity={0.8}
@@ -66,8 +66,9 @@ export default function SeatGrid({
             <Text style={[
               styles.text, 
               isSelected && styles.textSelected,
-              // Teks untuk kursi yang dibooking ikut meredup menyesuaikan style disabled
+
               (isBooked || (isMaxReached && !isSelected)) && styles.text
+              
             ]}>
               {seatName}
             </Text>
@@ -118,12 +119,12 @@ const styles = StyleSheet.create({
     borderColor: colors.secondary,
   },
   regularSize: {
-    width: 45,
+    width: 60,
     aspectRatio: 1,
   },
   expressSize: {
-    width: 45,
-    aspectRatio: 1 / 1.5,
+    width: 60,
+    aspectRatio: 1 / 1.8,
   },
   selected: {
     backgroundColor: colors.primary,
@@ -141,9 +142,9 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 12,
     fontWeight: '600',
-    color: '#333',
+    color: colors.text,
   },
   textSelected: {
-    color: '#fff',
+    color: colors.white,
   },
 });

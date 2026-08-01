@@ -1,7 +1,7 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { router } from "expo-router";
 import { useEffect, useState } from "react";
-import { Alert, ScrollView, View, StyleSheet, Text, TouchableOpacity } from "react-native";
+import { Alert, ScrollView, View, Text, TouchableOpacity } from "react-native";
 import DateSelector from "./comp/DateSelector";
 import PriceBox from "./comp/PriceBox";
 import SeatGrid from "./comp/SeatGrid";
@@ -9,13 +9,12 @@ import ServiceSelector from "./comp/ServiceSelect";
 import { globalStyles } from "./styles/global";
 
 export default function Book() {
-    // 1. State Utama untuk menyimpan pilihan user
     const [selectedDate, setSelectedDate] = useState<string>("");
     const [shippingType, setShippingType] = useState<string>("regular");
     const [selectedSeats, setSelectedSeats] = useState<string[]>([]);
-    const [bookedSeats, setBookedSeats] = useState<string[]>([]); // State untuk menampung kursi yang sudah dibooking orang lain
+    const [bookedSeats, setBookedSeats] = useState<string[]>([]); 
 
-    // 2. Fungsi untuk meload kursi yang sudah dibooking dari AsyncStorage berdasarkan Tanggal & Layanan
+    // load booked seat from asynxstorage
     const fetchBookedSeats = async (date: string, shipping: string) => {
         if (!date) return;
         try {
@@ -28,33 +27,33 @@ export default function Book() {
             const allBooked = parsedData.flatMap((item: any) => item.seats);
             setBookedSeats(allBooked);
         } else {
-            setBookedSeats([]); // Jika belum ada data, kosongkan
+            setBookedSeats([]);
         }
         } catch (error) {
         console.error("Gagal memuat data booking:", error);
         }
     };
 
-    // Jalankan fetch setiap kali tanggal atau jenis shipping berubah
+    // auto fetcg
     useEffect(() => {
         if (selectedDate) {
         fetchBookedSeats(selectedDate, shippingType);
         }
     }, [selectedDate, shippingType]);
 
-    // 3. Handler saat Tanggal diubah -> Reset kursi terpilih & load ulang data
+    // date
     const handleDateChange = (date: string) => {
         setSelectedDate(date);
         setSelectedSeats([]);
     };
 
-    // 4. Handler saat Tipe Layanan diubah -> Reset kursi terpilih & load ulang data
+    // shiping/service
     const handleShippingChange = (type: string) => {
         setShippingType(type);
         setSelectedSeats([]);
     };
 
-    // Helper untuk menghitung total harga (mengikuti aturan jendela / tengah)
+    // total price
     const calculateTotalPrice = () => {
         let total = 0;
         selectedSeats.forEach((seat) => {
@@ -70,8 +69,6 @@ export default function Book() {
         return total;
     };
 
-    // 5. Fungsi Konfirmasi Booking & Menyimpan ke AsyncStorage
-    // Helper untuk menghitung total kapasitas kursi
     const getTotalCapacity = (shipping: string) => {
         const rows =
         shipping === "regular" ? ["A", "B", "C", "D", "E"] : ["A", "B", "C"];
@@ -79,7 +76,6 @@ export default function Book() {
         return rows.length * seatsPerRow;
     };
 
-    // Fungsi Konfirmasi Booking dengan Logika If-Else yang Jelas
     const handleCheckout = async () => {
         if (selectedSeats.length === 0) {
         Alert.alert("Warn", "Silakan pilih minimal 1 kursi terlebih dahulu!");
@@ -89,19 +85,15 @@ export default function Book() {
         try {
         const storageKey = `@booking_${selectedDate}_${shippingType}`;
 
-        // 1. Ambil data terbaru dari AsyncStorage
         const existingData = await AsyncStorage.getItem(storageKey);
         const bookings = existingData ? JSON.parse(existingData) : [];
 
-        // Gabungkan semua kursi yang sudah dibooking orang lain sebelumnya
         const currentBookedSeats = bookings.flatMap((item: any) => item.seats);
 
-        // 2. Hitung total kapasitas dan sisa kursi
         const maxTotalSeats = getTotalCapacity(shippingType);
         const remainingSeats = maxTotalSeats - currentBookedSeats.length;
 
-        // 3. LOGIKA IF-ELSE UTAMA
-        // Jika jumlah kursi yang dipilih pengguna SAMA DENGAN sisa kursi (berarti habis/penuh total)
+        // Logic : if number of selected = total seats - booked seats : DESTROY 
         if (selectedSeats.length === remainingSeats) {
             Alert.alert(
             "Fully Booked",
@@ -110,7 +102,6 @@ export default function Book() {
                 {
                 text: "OK",
                 onPress: async () => {
-                    // Hapus semua riwayat booking di tanggal & layanan tersebut
                     await AsyncStorage.removeItem(storageKey);
                     setBookedSeats([]);
                     setSelectedSeats([]);
@@ -120,7 +111,6 @@ export default function Book() {
             ],
             );
         } else {
-            // JIKA TIDAK PENUH (masih ada sisa kursi lain), data langsung di-store secara normal
             const newBooking = {
             id: Date.now().toString(),
             date: selectedDate,
@@ -132,7 +122,7 @@ export default function Book() {
 
             bookings.push(newBooking);
 
-            // Simpan ke AsyncStorage
+            // save to AsyncStorage
             await AsyncStorage.setItem(storageKey, JSON.stringify(bookings));
 
             Alert.alert(
@@ -159,17 +149,14 @@ export default function Book() {
 
     return (
         <View>
-            <ScrollView
-            contentContainerStyle={globalStyles.container}
-            >
+            <ScrollView contentContainerStyle={{ paddingBottom: 265, paddingVertical: 20, ...globalStyles.container }} showsVerticalScrollIndicator={false}>
+                <Text style={globalStyles.title}>Book your Seat</Text>
                 <View style={{marginTop: 20, ...globalStyles.blockVertical}}>
-                    <Text style={globalStyles.title}>Book your Seat</Text>
-
-                    {/* Komponen Pemilih Tanggal */}
+                    <Text style={globalStyles.subtitle}>Select the date:</Text>
                     <DateSelector onDateChange={handleDateChange} />
                 </View>
 
-                {/* Komponen Pemilih Jenis Layanan (Regular / Express) */}
+                {/* (Regular / Express) */}
                 <View style={globalStyles.blockVerticalThin}>
                     <ServiceSelector
                         selected={shippingType}
@@ -177,11 +164,11 @@ export default function Book() {
                         />
                 </View>
 
-                {/* Grid Kursi */}
-                <View style={{marginBottom:265, ...globalStyles.blockVertical}}>
+                {/* Grid seat */}
+                <View style={globalStyles.blockVertical}>
                     <Text style={globalStyles.text}>Choose seat (Max 5)</Text>
                 <SeatGrid
-                    bookedSeats={bookedSeats} // Kursi yang sudah ter-booking otomatis menjadi disabled (merah)
+                    bookedSeats={bookedSeats} 
                     shippingType={shippingType}
                     selectedSeats={selectedSeats}
                     onSeatChange={setSelectedSeats}
@@ -190,25 +177,22 @@ export default function Book() {
 
             </ScrollView>
                 <View style={globalStyles.blockFixedBottom}>
-                    {/* Komponen Boks Harga Realtime */}
                     <PriceBox selectedSeats={selectedSeats} shippingType={shippingType} />
-                    {/* Tombol Konfirmasi Booking */}
+
+                    <View style={{flexDirection: 'row', gap: 15}}>
+                    <TouchableOpacity style={{...globalStyles.ButtonLarge, ...globalStyles.darkButton}} onPress={() => router.back()}>
+                        <Text style={globalStyles.primaryText}>Back</Text>
+                    </TouchableOpacity>
                     <TouchableOpacity
-                        style={{...globalStyles.ButtonLarge, ...globalStyles.primaryButton}}
+                        style={{...globalStyles.ButtonLarge, ...globalStyles.primaryButton, flex: 2}}
                         onPress={handleCheckout}
                         activeOpacity={0.8}
                         >
-                        <Text style={styles.bookingBtnText}>Konfirmasi Pesanan</Text>
+                        <Text style={globalStyles.primaryText}>Confirm</Text>
                     </TouchableOpacity>
+                    </View>
+
                 </View>
         </View>
     );
 }
-
-const styles = StyleSheet.create({
-    bookingBtnText: {
-        color: "#fff",
-        fontSize: 16,
-        fontWeight: "bold",
-    },
-});

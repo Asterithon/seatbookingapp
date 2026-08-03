@@ -88,7 +88,7 @@ export default function BookList() {
             <ScrollView contentContainerStyle={{ paddingBottom: 265, paddingVertical: 20, ...globalStyles.container }} showsVerticalScrollIndicator={false}>
                 <Text style={{marginVertical: 20, ...globalStyles.title}}>Booking List History</Text>
 
-                {/* --- BAGIAN FILTER (TANGGAL & LAYANAN) --- */}
+                {/* --- filter --- */}
                 <View style={globalStyles.blockVertical}>
                     <Text style={globalStyles.label}>Filter by date:</Text>
                     <View style={styles.shippingFilterRow}>
@@ -143,7 +143,7 @@ export default function BookList() {
                     </View>
                 </View>
 
-                {/* --- DAFTAR ITEM BOOKING MENGGUNAKAN KOMPONEN --- */}
+                {/* --- booking list --- */}
                 {(!filteredBookings || filteredBookings.length === 0) ? (
                     <View style={styles.emptyContainer}>
                         <Text style={styles.emptyText}>Tidak ada data pemesanan yang sesuai dengan filter.</Text>

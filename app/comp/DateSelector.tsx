@@ -10,7 +10,7 @@ interface DateSelectorProps {
 export default function DateSelector({ onDateChange }: DateSelectorProps) {
   const today = new Date();
   
-  // Format tanggal ke "YYYY-MM-DD"
+  // Format to "YYYY-MM-DD"
   const formatDate = (date: Date) => {
     const year = date.getFullYear();
     const month = String(date.getMonth() + 1).padStart(2, '0');
@@ -35,7 +35,7 @@ export default function DateSelector({ onDateChange }: DateSelectorProps) {
 
   return (
     <View style={styles.container}>
-      {/* Tombol pemicu kalender */}
+      {/* triger calendar */}
       <TouchableOpacity
         style={styles.dateBtn}
         onPress={() => setShowPicker(true)}
@@ -46,7 +46,7 @@ export default function DateSelector({ onDateChange }: DateSelectorProps) {
         </Text>
       </TouchableOpacity>
 
-      {/* Komponen Kalender Bawaan */}
+      {/* component defaulr */}
       {showPicker && (
         <DateTimePicker
           value={selectedDate}
